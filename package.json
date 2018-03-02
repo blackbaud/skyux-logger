@@ -1,0 +1,35 @@
+{
+  "name": "skyux-logger",
+  "version": "1.0.0",
+  "description": "Logging functionality used in SKY UX CLI and SKY UX Builder.",
+  "main": "index.js",
+  "scripts": {
+    "coverage": "istanbul cover --report=html ./node_modules/jasmine/bin/jasmine.js JASMINE_CONFIG_PATH=jasmine.json",
+    "jscs": "jscs src index.js",
+    "jshint": "jshint src index.js",
+    "lint": "npm run jshint && npm run jscs",
+    "test": "npm run lint && npm run coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blackbaud/skyux-logger.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/blackbaud/skyux-logger/issues"
+  },
+  "homepage": "https://github.com/blackbaud/skyux-logger#readme",
+  "dependencies": {
+    "minimist": "1.2.0",
+    "winston": "2.4.0"
+  },
+  "devDependencies": {
+    "istanbul": "0.4.5",
+    "jasmine": "2.8.0",
+    "jscs": "3.0.7",
+    "jshint": "2.9.5",
+    "mock-require": "2.0.2"
+  }
+}
