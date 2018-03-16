@@ -31,6 +31,15 @@ describe('logger', () => {
     return consoleOptions;
   }
 
+  it('should configure logColor as boolean in minimist', () => {
+    mock('minimist', (args, opts) => {
+      expect(opts.boolean).toEqual('logColor');
+      return {};
+    });
+
+    mock.reRequire('../src/logger');
+  });
+
   it('should accept the logColor flag', () => {
     const opts = setupTest({ logColor: false });
     expect(opts.colorize).toEqual(false);
