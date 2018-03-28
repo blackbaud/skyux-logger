@@ -4,15 +4,10 @@
 const winston = require('winston');
 const minimist = require('minimist');
 
-// We always want `logColor` to be a boolean
-const opts = {
-  'boolean': 'logColor'
-};
-
 // These values are purposefully only read from the command line.
 // This is done because the CLI doesn't always have access to a skyuxconfig.json file.
-const argv = minimist(process.argv.slice(2), opts);
-const logColor = argv.hasOwnProperty('logColor') ? argv.logColor : true;
+const argv = minimist(process.argv.slice(2));
+const logColor = argv.hasOwnProperty('logColor') ? argv.logColor === 'true' : true;
 const logLevel = argv.hasOwnProperty('logLevel') ? argv.logLevel : 'info';
 
 const logger = new winston.Logger({
