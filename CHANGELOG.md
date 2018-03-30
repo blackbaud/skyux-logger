@@ -1,6 +1,6 @@
 # 1.0.2 (2018-03-29)
 
-- Bugfix to handle `logColor` as a string, but for real.  [#4](https://github.com/blackbaud/skyux-logger/pull/4)
+- Bugfix to correctly set the `logColor` default to true.  [#4](https://github.com/blackbaud/skyux-logger/pull/4)
 
 # 1.0.1 (2018-03-16)
 
