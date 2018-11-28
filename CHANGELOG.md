@@ -1,3 +1,7 @@
+# 1.1.0 (2018-11-28)
+
+- Added `.promise()` method to wrap Ora Library functionality. [#6](https://github.com/blackbaud/skyux-logger/pull/6)
+
 # 1.0.2 (2018-03-29)
 
 - Bugfix to correctly set the `logColor` default to true.  [#4](https://github.com/blackbaud/skyux-logger/pull/4)
