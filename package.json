@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/blackbaud/skyux-logger#readme",
   "dependencies": {
+    "ora": "3.0.0",
     "minimist": "1.2.0",
     "winston": "2.4.0"
   },

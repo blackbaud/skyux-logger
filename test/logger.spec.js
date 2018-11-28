@@ -66,4 +66,27 @@ describe('logger', () => {
     expect(logger.logLevel).toBe('verbose');
     expect(logger.logColor).toBe(false);
   });
+
+  it('should expose a promise that calls in to the ora library', () => {
+    const spyOra = jasmine.createSpy('ora');
+    const spyOraStart = jasmine.createSpyObj('ora', ['start']);
+    const spyOraReturn = jasmine.createSpyObj(
+      'ora',
+      [
+        'fail',
+        'succeed'
+      ]
+    );
+
+    spyOra.and.returnValue(spyOraStart);
+    spyOraStart.start.and.returnValue(spyOraReturn);
+    mock('ora', spyOra);
+
+    const message = 'test-message';
+    const logger = mock.reRequire('../src/logger');
+    const response = logger.promise(message);
+
+    expect(response.succeed).toBeDefined();
+    expect(response.fail).toBeDefined();
+  });
 });

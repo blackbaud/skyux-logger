@@ -1,6 +1,7 @@
 /*jshint node: true */
 'use strict';
 
+const ora = require('ora');
 const winston = require('winston');
 const minimist = require('minimist');
 
@@ -32,6 +33,9 @@ const logger = new winston.Logger({
     })
   ]
 });
+
+// Expose ora logger
+logger.promise = (message) => ora(message).start();
 
 // Expose this logic to others
 logger.logColor = logColor;
