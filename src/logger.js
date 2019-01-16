@@ -50,8 +50,9 @@ logger.promise = (message) => {
   logger.info(message);
   return {
     fail: () => {},
+
     succeed: () => {}
-  }
-}
+  };
+};
 
 module.exports = logger;
