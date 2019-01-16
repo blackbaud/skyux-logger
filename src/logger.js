@@ -46,7 +46,7 @@ logger.promise = (message) => {
   }
 
   // Expose a compatabily API if verbose.
-  // This is necessary otherwise ora would hijack displaying it's message on a single line.
+  // This is necessary otherwise ora would hijack displaying its message on a single line.
   logger.info(message);
   return {
     fail: () => {},
