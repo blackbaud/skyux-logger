@@ -89,4 +89,18 @@ describe('logger', () => {
     expect(response.succeed).toBeDefined();
     expect(response.fail).toBeDefined();
   });
+
+  it('should emulate ora when logLevel is verbose', () => {
+    const spyOra = jasmine.createSpy('ora');
+    mock('ora', spyOra);
+
+    const logger = mock.reRequire('../src/logger');
+    logger.logLevel = 'verbose';
+
+    const message = logger.promise('test');
+
+    expect(message.fail).toBeDefined();
+    expect(message.succeed).toBeDefined();
+    expect(spyOra).not.toHaveBeenCalled();
+  });
 });

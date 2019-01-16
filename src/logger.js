@@ -34,11 +34,24 @@ const logger = new winston.Logger({
   ]
 });
 
-// Expose ora logger
-logger.promise = (message) => ora(message).start();
-
 // Expose this logic to others
 logger.logColor = logColor;
 logger.logLevel = logLevel;
+
+// Expose ora logger
+logger.promise = (message) => {
+
+  if (logger.logLevel !== 'verbose') {
+    return ora(message).start();
+  }
+
+  // Expose a compatabily API if verbose.
+  // This is necessary otherwise ora would hijack displaying it's message on a single line.
+  logger.info(message);
+  return {
+    fail: () => {},
+    succeed: () => {}
+  }
+}
 
 module.exports = logger;
