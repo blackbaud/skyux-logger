@@ -1,3 +1,7 @@
+# 1.1.1 (2019-01-17)
+
+- Bugfix to correctly display verbose logging while using the `.promise()` method. [#8](https://github.com/blackbaud/skyux-logger/pull/8)
+
 # 1.1.0 (2018-11-28)
 
 - Added `.promise()` method to wrap Ora library functionality. [#6](https://github.com/blackbaud/skyux-logger/pull/6)
