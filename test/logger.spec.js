@@ -89,4 +89,42 @@ describe('logger', () => {
     expect(response.succeed).toBeDefined();
     expect(response.fail).toBeDefined();
   });
+
+  it('should emulate ora when logLevel is verbose and log fail', () => {
+    const spyOra = jasmine.createSpy('ora');
+    mock('ora', spyOra);
+
+    const logger = mock.reRequire('../src/logger');
+    logger.logLevel = 'verbose';
+
+    spyOn(logger, 'info');
+    spyOn(logger, 'error');
+
+    const message = 'test-message';
+    const promise = logger.promise(message);
+    promise.fail();
+
+    expect(logger.info).toHaveBeenCalledWith(`... ${message}`)
+    expect(logger.error).toHaveBeenCalledWith(`✖ ${message}`);
+    expect(spyOra).not.toHaveBeenCalled();
+  });
+
+  it('should emulate ora when logLevel is verbose and log succeed', () => {
+    const spyOra = jasmine.createSpy('ora');
+    mock('ora', spyOra);
+
+    const logger = mock.reRequire('../src/logger');
+    logger.logLevel = 'verbose';
+
+    spyOn(logger, 'info');
+    spyOn(logger, 'error');
+
+    const message = 'test-message';
+    const promise = logger.promise(message);
+    promise.succeed();
+
+    expect(logger.info).toHaveBeenCalledWith(`... ${message}`)
+    expect(logger.info).toHaveBeenCalledWith(`✔ ${message}`);
+    expect(spyOra).not.toHaveBeenCalled();
+  });
 });
