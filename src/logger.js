@@ -47,11 +47,11 @@ logger.promise = (message) => {
 
   // Expose a compatibility API if verbose.
   // This is necessary otherwise ora would hijack displaying its message on a single line.
-  logger.info(message);
+  logger.info(`... ${message}`);
   return {
-    fail: () => {},
+    fail: () => logger.error(`✖ ${message}`),
 
-    succeed: () => {}
+    succeed: () => logger.info(`✔ ${message}`)
   };
 };
 
