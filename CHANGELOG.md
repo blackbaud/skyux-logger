@@ -1,3 +1,8 @@
+# 1.1.2 (2020-03-30)
+
+- Upgraded several `devDependencies` to their latest versions.  [#13](https://github.com/blackbaud/skyux-logger/pull/13)
+- Upgraded the version of `minimist` to `1.2.5`.  [#10](https://github.com/blackbaud/skyux-logger/pull/10)
+
 # 1.1.1 (2019-01-17)
 
 - Bugfix to correctly display verbose logging while using `.promise()` method. [#8](https://github.com/blackbaud/skyux-logger/pull/8)
