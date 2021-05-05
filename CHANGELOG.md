@@ -1,3 +1,7 @@
+# 1.1.3 (2021-05-05)
+
+- Upgraded the version of `winston` to `2.4.5` to address a circular dependency warning when using Node.js 14. [#18](https://github.com/blackbaud/skyux-logger/pull/18)
+
 # 1.1.2 (2020-03-30)
 
 - Upgraded several `devDependencies` to their latest versions.  [#13](https://github.com/blackbaud/skyux-logger/pull/13)
