@@ -22,7 +22,7 @@
   "dependencies": {
     "ora": "4.0.3",
     "minimist": "1.2.5",
-    "winston": "2.4.4"
+    "winston": "2.4.5"
   },
   "devDependencies": {
     "jasmine": "3.5.0",
