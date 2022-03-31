@@ -1,6 +1,6 @@
 # 1.1.4 (2022-03-31)
 
-- Upgraded the version of `minimist` to `1.2.6` to address a vulnerability warning. []()
+- Upgraded the version of `minimist` to `1.2.6` to address a vulnerability warning. [#19](https://github.com/blackbaud/skyux-logger/pull/19)
 
 # 1.1.3 (2021-05-05)
 
