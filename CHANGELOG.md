@@ -1,3 +1,7 @@
+# 1.1.4 (2022-03-31)
+
+- Upgraded the version of `minimist` to `1.2.6` to address a vulnerability warning. [#19](https://github.com/blackbaud/skyux-logger/pull/19)
+
 # 1.1.3 (2021-05-05)
 
 - Upgraded the version of `winston` to `2.4.5` to address a circular dependency warning when using Node.js 14. [#18](https://github.com/blackbaud/skyux-logger/pull/18)
