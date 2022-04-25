@@ -22,12 +22,14 @@
   "dependencies": {
     "minimist": "1.2.6",
     "ora": "4.0.3",
-    "winston": "2.4.5"
+    "winston": "3.7.2"
   },
   "devDependencies": {
-    "jasmine": "3.6.4",
     "eslint": "7.28.0",
+    "eslint-config-prettier": "8.5.0",
+    "jasmine": "3.6.4",
     "mock-require": "3.0.3",
-    "nyc": "15.1.0"
+    "nyc": "15.1.0",
+    "prettier": "2.6.2"
   }
 }

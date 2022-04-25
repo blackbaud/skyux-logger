@@ -1,6 +1,3 @@
-/*jshint jasmine: true, node: true */
-'use strict';
-
 const mock = require('mock-require');
 
 describe('logger', () => {
@@ -11,55 +8,74 @@ describe('logger', () => {
   function setupTest(argv) {
     let _transports;
     let consoleOptions;
+    let formatSpyObj = jasmine.createSpyObj('format', [
+      'colorize',
+      'combine',
+      'printf',
+      'simple',
+    ]);
+
+    formatSpyObj.printf.and.callFake((callback) => {
+      callback({ message: 'foobar' });
+    });
+
+    // Run all functions added to the `combine` function to calculate
+    // coverage for each callback.
+    formatSpyObj.combine.and.callFake((...callbacks) => {
+      callbacks.forEach((callback) => callback && callback());
+    });
 
     mock('minimist', () => argv);
     mock('winston', {
-      Logger: function (opts) {
+      createLogger(opts) {
         _transports = opts.transports;
+        return {};
       },
+
+      format: formatSpyObj,
 
       transports: {
         Console: function (opts) {
           consoleOptions = opts;
-        }
-      }
+        },
+      },
     });
 
     mock.reRequire('../src/logger');
     expect(_transports).toBeDefined();
 
-    return consoleOptions;
+    return { consoleOptions, formatSpyObj };
   }
 
   it('should accept the logColor flag as string', () => {
-    const opts = setupTest({ logColor: 'true' });
-    expect(opts.colorize).toEqual(true);
+    const { formatSpyObj } = setupTest({ logColor: 'true' });
+    expect(formatSpyObj.colorize).toHaveBeenCalled();
   });
 
   it('should accept the logColor flag as boolean', () => {
-    const opts = setupTest({ logColor: false });
-    expect(opts.colorize).toEqual(false);
+    const { formatSpyObj } = setupTest({ logColor: false });
+    expect(formatSpyObj.colorize).not.toHaveBeenCalled();
   });
 
   it('should set the default logColor to true', () => {
-    const opts = setupTest({});
-    expect(opts.colorize).toEqual(true);
+    const { formatSpyObj } = setupTest({});
+    expect(formatSpyObj.colorize).toHaveBeenCalled();
   });
 
   it('should accept the logLevel flag', () => {
-    const opts = setupTest({ logLevel: 'verbose' });
-    expect(opts.level).toEqual('verbose');
+    const { consoleOptions } = setupTest({ logLevel: 'verbose' });
+    expect(consoleOptions.level).toEqual('verbose');
   });
 
   it('should set the default logLevel to info', () => {
-    const opts = setupTest({});
-    expect(opts.level).toEqual('info');
+    const { consoleOptions } = setupTest({});
+    expect(consoleOptions.level).toEqual('info');
   });
 
   it('should expose the logLevel and logColor properties', () => {
     mock('minimist', () => ({
-      'logLevel': 'verbose',
-      'logColor': false
+      logLevel: 'verbose',
+      logColor: false,
     }));
 
     const logger = mock.reRequire('../src/logger');
@@ -70,13 +86,7 @@ describe('logger', () => {
   it('should expose a promise that calls in to the ora library', () => {
     const spyOra = jasmine.createSpy('ora');
     const spyOraStart = jasmine.createSpyObj('ora', ['start']);
-    const spyOraReturn = jasmine.createSpyObj(
-      'ora',
-      [
-        'fail',
-        'succeed'
-      ]
-    );
+    const spyOraReturn = jasmine.createSpyObj('ora', ['fail', 'succeed']);
 
     spyOra.and.returnValue(spyOraStart);
     spyOraStart.start.and.returnValue(spyOraReturn);
@@ -104,7 +114,7 @@ describe('logger', () => {
     const promise = logger.promise(message);
     promise.fail();
 
-    expect(logger.info).toHaveBeenCalledWith(`... ${message}`)
+    expect(logger.info).toHaveBeenCalledWith(`... ${message}`);
     expect(logger.error).toHaveBeenCalledWith(`✖ ${message}`);
     expect(spyOra).not.toHaveBeenCalled();
   });
@@ -123,7 +133,7 @@ describe('logger', () => {
     const promise = logger.promise(message);
     promise.succeed();
 
-    expect(logger.info).toHaveBeenCalledWith(`... ${message}`)
+    expect(logger.info).toHaveBeenCalledWith(`... ${message}`);
     expect(logger.info).toHaveBeenCalledWith(`✔ ${message}`);
     expect(spyOra).not.toHaveBeenCalled();
   });
