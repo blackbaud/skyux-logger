@@ -1,6 +1,3 @@
-/*jshint node: true */
-'use strict';
-
 const ora = require('ora');
 const winston = require('winston');
 const minimist = require('minimist');
@@ -10,32 +7,44 @@ const minimist = require('minimist');
 const argv = minimist(process.argv.slice(2));
 
 // eslint-disable-next-line no-prototype-builtins
-const logColor = argv.hasOwnProperty('logColor') ? argv.logColor === 'true' : true;
+const logColor = argv.hasOwnProperty('logColor')
+  ? argv.logColor === 'true'
+  : true;
 
 // eslint-disable-next-line no-prototype-builtins
 const logLevel = argv.hasOwnProperty('logLevel') ? argv.logLevel : 'info';
 
-const logger = new winston.Logger({
+const customLevels = {
   levels: {
     error: 0,
     warn: 1,
     info: 2,
-    verbose: 3
+    verbose: 3,
   },
   colors: {
-    error: 'red',
+    error: 'bold red',
     warn: 'yellow',
-    info: 'blue',
-    verbose: 'cyan'
+    info: 'cyan',
+    verbose: 'magenta',
   },
+};
+
+const consoleFormat = logColor
+  ? winston.format.combine(
+      winston.format.colorize({ all: true, colors: customLevels.colors }),
+      winston.format.printf((x) => x.message)
+    )
+  : winston.format.combine(winston.format.simple());
+
+const logger = winston.createLogger({
+  levels: customLevels.levels,
   transports: [
     new winston.transports.Console({
       level: logLevel,
       handleExceptions: true,
-      colorize: logColor,
-      showLevel: false
-    })
-  ]
+      format: consoleFormat,
+    }),
+  ],
 });
 
 // Expose this logic to others
@@ -44,7 +53,6 @@ logger.logLevel = logLevel;
 
 // Expose ora logger
 logger.promise = (message) => {
-
   if (logger.logLevel !== 'verbose') {
     return ora(message).start();
   }
@@ -55,7 +63,7 @@ logger.promise = (message) => {
   return {
     fail: () => logger.error(`✖ ${message}`),
 
-    succeed: () => logger.info(`✔ ${message}`)
+    succeed: () => logger.info(`✔ ${message}`),
   };
 };
 
