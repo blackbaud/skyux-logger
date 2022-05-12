@@ -69,6 +69,4 @@ logger.promise = (message) => {
   };
 };
 
-console.log('LOGGGER');
-
 module.exports = logger;
