@@ -13,6 +13,7 @@ describe('logger', () => {
       'combine',
       'printf',
       'simple',
+      'splat',
     ]);
 
     formatSpyObj.printf.and.callFake((callback) => {

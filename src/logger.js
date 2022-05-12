@@ -31,10 +31,12 @@ const customLevels = {
 
 const consoleFormat = logColor
   ? winston.format.combine(
+      winston.format.splat(),
+      winston.format.simple(),
       winston.format.colorize({ all: true, colors: customLevels.colors }),
       winston.format.printf((x) => x.message)
     )
-  : winston.format.combine(winston.format.simple());
+  : winston.format.combine(winston.format.splat(), winston.format.simple());
 
 const logger = winston.createLogger({
   levels: customLevels.levels,
