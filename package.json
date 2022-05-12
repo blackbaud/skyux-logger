@@ -1,6 +1,6 @@
 {
   "name": "@blackbaud/skyux-logger",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Logging functionality used in SKY UX CLI and SKY UX Builder.",
   "main": "index.js",
   "scripts": {
