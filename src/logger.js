@@ -29,22 +29,24 @@ const customLevels = {
   },
 };
 
-const consoleFormat = logColor
+const sharedFormatters = [winston.format.splat(), winston.format.simple()];
+
+const loggerFormat = logColor
   ? winston.format.combine(
-      winston.format.splat(),
-      winston.format.simple(),
+      ...sharedFormatters,
       winston.format.colorize({ all: true, colors: customLevels.colors }),
+      // Colorize the entire message, not just the label.
       winston.format.printf((x) => x.message)
     )
-  : winston.format.combine(winston.format.splat(), winston.format.simple());
+  : winston.format.combine(...sharedFormatters);
 
 const logger = winston.createLogger({
   levels: customLevels.levels,
+  format: loggerFormat,
   transports: [
     new winston.transports.Console({
       level: logLevel,
       handleExceptions: true,
-      format: consoleFormat,
     }),
   ],
 });
