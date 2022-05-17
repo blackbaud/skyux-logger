@@ -138,4 +138,21 @@ describe('logger', () => {
     expect(logger.info).toHaveBeenCalledWith(`✔ ${message}`);
     expect(spyOra).not.toHaveBeenCalled();
   });
+
+  it('should format the log messages', () => {
+    const { consoleOptions, formatSpyObj } = setupTest({});
+
+    expect(consoleOptions.format).toBeUndefined();
+    expect(formatSpyObj.simple).toHaveBeenCalledWith();
+    expect(formatSpyObj.splat).toHaveBeenCalledWith();
+    expect(formatSpyObj.colorize).toHaveBeenCalledWith({
+      all: true,
+      colors: {
+        error: 'bold red',
+        warn: 'yellow',
+        info: 'cyan',
+        verbose: 'magenta',
+      },
+    });
+  });
 });

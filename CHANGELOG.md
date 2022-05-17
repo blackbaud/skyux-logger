@@ -1,3 +1,7 @@
+# 1.2.2 (2022-05-17)
+
+- Fixed the error logger to handle `Error` objects. []()
+
 # 1.2.1 (2022-05-12)
 
 - Added support string interpolation. [#21](https://github.com/blackbaud/skyux-logger/pull/21)
