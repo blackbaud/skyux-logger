@@ -29,14 +29,19 @@ const customLevels = {
   },
 };
 
-const sharedFormatters = [winston.format.splat(), winston.format.simple()];
+const sharedFormatters = [
+  winston.format.splat(),
+  winston.format.simple(),
+  winston.format.errors({ stack: true }),
+];
 
 const loggerFormat = logColor
   ? winston.format.combine(
       ...sharedFormatters,
       winston.format.colorize({ all: true, colors: customLevels.colors }),
-      // Colorize the entire message, not just the label.
-      winston.format.printf((x) => x.message)
+      winston.format.printf((x) => {
+        return x.stack ? `${x.message}\n${x.stack}` : x.message;
+      })
     )
   : winston.format.combine(...sharedFormatters);
 

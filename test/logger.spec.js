@@ -11,6 +11,7 @@ describe('logger', () => {
     let formatSpyObj = jasmine.createSpyObj('format', [
       'colorize',
       'combine',
+      'errors',
       'printf',
       'simple',
       'splat',
@@ -145,6 +146,7 @@ describe('logger', () => {
     expect(consoleOptions.format).toBeUndefined();
     expect(formatSpyObj.simple).toHaveBeenCalledWith();
     expect(formatSpyObj.splat).toHaveBeenCalledWith();
+    expect(formatSpyObj.errors).toHaveBeenCalledWith({ stack: true });
     expect(formatSpyObj.colorize).toHaveBeenCalledWith({
       all: true,
       colors: {
