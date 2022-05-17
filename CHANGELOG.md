@@ -1,6 +1,6 @@
 # 1.2.2 (2022-05-17)
 
-- Fixed the error logger to handle `Error` objects. []()
+- Fixed the error logger to handle `Error` objects. [#22](https://github.com/blackbaud/skyux-logger/pull/22)
 
 # 1.2.1 (2022-05-12)
 
